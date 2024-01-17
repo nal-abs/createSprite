@@ -6,14 +6,22 @@ const getImages = async () => {
 	try {
 		const folderPath = 'Images';
 		const files = await fs.readdir(folderPath);
-		const filteredImage = files.filter((file) => (/\.(jpg|jpeg|png|gif)$/i).test(file));
-		const images = filteredImage.map((image) => `Images/${ image }`);
+		const filteredImages = files.filter((file) =>
+			(/\.(jpg|jpeg|png|webp)$/i).test(file));
 
-		return images;
+		return filteredImages.map((image) => `Images/${ image }`);
 	}
 	catch (error) {
 		throw new Error('Error reading folder:', error);
 	}
+};
+
+const getWebp = async (image) => {
+	const webpBuffer = await sharp(image)
+		.toFormat('webp', { quality: 100 })
+		.toBuffer();
+
+	await fs.writeFile('sprite.webp', webpBuffer);
 };
 
 const createSprite = async () => {
@@ -30,11 +38,8 @@ const createSprite = async () => {
 		await fs.writeFile('sprite.json', JSON.stringify(detail.coordinates));
 
 		const pngBuffer = await fs.readFile('sprite.png');
-		const webpBuffer = await sharp(pngBuffer)
-			.toFormat('webp', { quality: 100 })
-			.toBuffer();
 
-		await fs.writeFile('sprite.webp', webpBuffer);
+		getWebp(pngBuffer);
 	}
 	catch (error) {
 		throw new Error('Error:', error);
