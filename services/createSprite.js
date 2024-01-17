@@ -1,15 +1,16 @@
+const config = require('../core/config.js');
 const Spritesmith = require('spritesmith');
 const fs = require('fs').promises;
 const sharp = require('sharp');
 
 const getImages = async () => {
 	try {
-		const folderPath = 'Images';
+		const folderPath = config.imageLocation;
 		const files = await fs.readdir(folderPath);
 		const filteredImages = files.filter((file) =>
 			(/\.(jpg|jpeg|png|webp)$/i).test(file));
 
-		return filteredImages.map((image) => `Images/${ image }`);
+		return filteredImages.map((image) => `${ folderPath }/${ image }`);
 	}
 	catch (error) {
 		throw new Error('Error reading folder:', error);
