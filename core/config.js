@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 const config = {
 	imageLocation: 'Images',
-	temp: 1,
+	csvData: 'services/image.csv',
 };
 
 module.exports = config;
