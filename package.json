@@ -4,6 +4,9 @@
   "description": "",
   "main": "createSprite.js",
   "dependencies": {
+    "@laufire/utils": "^3.0.0-0",
+    "csv-parser": "^3.0.0",
+    "csvtojson": "^2.0.10",
     "sharp": "^0.33.2",
     "spritesmith": "^3.4.1"
   },
